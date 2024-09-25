@@ -4,7 +4,6 @@ import QuizStart from './components/QuizStart';
 import QuestionCard from './components/QuestionCard';
 import ScoreSummary from './components/ScoreSummary';
 import QuizHistory from './components/QuizHistory';
-import './index.css'
 
 function App() {
   const [quizStarted, setQuizStarted] = useState(false);
@@ -20,8 +19,8 @@ function App() {
     setHistory(storedHistory);
   }, []);
 
+  // Fetch categories when the app loads
   useEffect(() => {
-    // Fetch available categories from the API
     const fetchCategories = async () => {
       const response = await fetch('https://opentdb.com/api_category.php');
       const data = await response.json();
@@ -30,6 +29,7 @@ function App() {
     fetchCategories();
   }, []);
 
+  // Start quiz by fetching questions from API
   const startQuiz = async (category, difficulty, amount) => {
     const fetchedQuestions = await fetchQuizQuestions(category, difficulty, amount);
     setQuestions(fetchedQuestions);
@@ -38,11 +38,13 @@ function App() {
     setQuizStarted(true);
   };
 
+  // Handle answer selection and score increment
   const handleAnswerSelect = (selectedAnswer) => {
     const correctAnswer = questions[currentQuestionIndex].correct_answer;
     if (selectedAnswer === correctAnswer) {
-      setScore(score + 1);
+      setScore((prevScore) => prevScore + 1);
     }
+
     if (currentQuestionIndex + 1 < questions.length) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
@@ -50,11 +52,11 @@ function App() {
     }
   };
 
+  // Finish quiz and store result in history
   const finishQuiz = () => {
-    // Save the result to the history in localStorage
     const newEntry = {
-      topic: categories.find((cat) => cat.id === questions[0].category).name,
-      score: score + (questions[currentQuestionIndex].correct_answer === questions[currentQuestionIndex].correct_answer ? 1 : 0),
+      topic: categories.find((cat) => cat.id === questions[0].category)?.name || 'Unknown',
+      score,
       total: questions.length,
       date: new Date().toLocaleString(),
     };
@@ -63,12 +65,19 @@ function App() {
     setHistory(updatedHistory);
     localStorage.setItem('quizHistory', JSON.stringify(updatedHistory));
 
-    setQuizStarted(false); // Quiz is finished
+    setQuizStarted(false); // Quiz finished
   };
 
+  // Retake quiz or start a new one
   const retakeQuiz = () => {
     setQuizStarted(false);
     setQuestions([]);
+  };
+
+  // Clear quiz history
+  const clearHistory = () => {
+    localStorage.removeItem('quizHistory');
+    setHistory([]);
   };
 
   return (
@@ -76,7 +85,7 @@ function App() {
       {!quizStarted && questions.length === 0 ? (
         <>
           <QuizStart categories={categories} onStartQuiz={startQuiz} />
-          {history.length > 0 && <QuizHistory history={history} />}
+          {history.length > 0 && <QuizHistory history={history} clearHistory={clearHistory} />}
         </>
       ) : !quizStarted ? (
         <ScoreSummary score={score} total={questions.length} onRetakeQuiz={retakeQuiz} />
