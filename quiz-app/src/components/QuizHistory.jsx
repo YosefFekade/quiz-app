@@ -2,39 +2,36 @@ import React from 'react';
 
 const QuizHistory = ({ history, clearHistory }) => {
   return (
-    <div className="quiz-history mt-8">
+    <div className="quiz-history p-4 border rounded shadow-md max-w-md mx-auto mt-8">
       <h2 className="text-2xl font-bold mb-4">Quiz History</h2>
+      
       {history.length > 0 ? (
-        <>
-          <table className="min-w-full table-auto bg-white border">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 border">Date</th>
-                <th className="px-4 py-2 border">Topic</th>
-                <th className="px-4 py-2 border">Score</th>
-                <th className="px-4 py-2 border">Total Questions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {history.map((entry, index) => (
-                <tr key={index} className="text-center">
-                  <td className="px-4 py-2 border">{entry.date}</td>
-                  <td className="px-4 py-2 border">{entry.topic}</td>
-                  <td className="px-4 py-2 border">{entry.score}</td>
-                  <td className="px-4 py-2 border">{entry.total}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <button
-            className="mt-4 p-2 bg-red-500 text-white rounded"
-            onClick={clearHistory}
-          >
-            Clear History
-          </button>
-        </>
+        <ul className="space-y-4">
+          {history.map((entry, index) => (
+            <li key={index} className="p-4 border rounded shadow-sm">
+              <div className="font-semibold">
+                <span className="text-gray-700">Topic:</span> {entry.topic || 'Unknown Topic'}
+              </div>
+              <div>
+                <span className="text-gray-700">Score:</span> {entry.score} / {entry.total}
+              </div>
+              <div>
+                <span className="text-gray-700">Date:</span> {entry.date}
+              </div>
+            </li>
+          ))}
+        </ul>
       ) : (
-        <p>No quizzes taken yet.</p>
+        <p>No quiz history available.</p>
+      )}
+
+      {history.length > 0 && (
+        <button
+          className="p-2 bg-red-500 text-white rounded w-full mt-4"
+          onClick={clearHistory}
+        >
+          Clear History
+        </button>
       )}
     </div>
   );

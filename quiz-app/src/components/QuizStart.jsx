@@ -1,43 +1,102 @@
 import React, { useState } from 'react';
 
 const QuizStart = ({ categories, onStartQuiz }) => {
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedDifficulty, setSelectedDifficulty] = useState('easy');
-  const [numberOfQuestions, setNumberOfQuestions] = useState(5);
+  const [categoryId, setCategoryId] = useState('');
+  const [categoryName, setCategoryName] = useState('');
+  const [difficulty, setDifficulty] = useState('easy');
+  const [amount, setAmount] = useState(10);
+  const [searchQuery, setSearchQuery] = useState(''); // State to track the search query
 
-  const startQuiz = () => {
-    if (selectedCategory && selectedDifficulty) {
-      onStartQuiz(selectedCategory, selectedDifficulty, numberOfQuestions);
-    } else {
-      alert('Please select a category and difficulty.');
-    }
+  // Filter categories based on the search query
+  const filteredCategories = categories.filter((cat) =>
+    cat.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Handle category selection and also store category name
+  const handleCategoryChange = (e) => {
+    const selectedId = e.target.value;
+    const selectedCategory = categories.find((cat) => cat.id == selectedId);
+
+    setCategoryId(selectedId);
+    setCategoryName(selectedCategory?.name || '');
+  };
+
+  // Handle start quiz
+  const handleStartQuiz = () => {
+    onStartQuiz(categoryId, categoryName, difficulty, amount);
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <h1 className="text-2xl font-bold mb-4">Start Your Quiz</h1>
-      <div className="flex flex-col mb-4">
-        <label>Category:</label>
-        <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="p-2 border rounded">
-          <option value="">Select Category</option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>{category.name}</option>
-          ))}
-        </select>
+    <div className="quiz-start p-4 border rounded shadow-md max-w-md mx-auto">
+      <h2 className="text-2xl font-bold mb-4">Start a Quiz</h2>
+
+      {/* Search bar for quiz topics */}
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search quiz topics..."
+          className="w-full p-2 border rounded"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
       </div>
-      <div className="flex flex-col mb-4">
-        <label>Difficulty:</label>
-        <select value={selectedDifficulty} onChange={(e) => setSelectedDifficulty(e.target.value)} className="p-2 border rounded">
+
+      {/* Display filtered categories */}
+      {filteredCategories.length > 0 ? (
+        <div className="mb-4">
+          <label className="block font-semibold mb-2">Select Topic:</label>
+          <select
+            className="w-full p-2 border rounded"
+            value={categoryId}
+            onChange={handleCategoryChange}
+          >
+            <option value="">-- Select a category --</option>
+            {filteredCategories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      ) : (
+        <p className="text-red-500 mb-4">No quiz topics found for "{searchQuery}".</p>
+      )}
+
+      {/* Difficulty Level */}
+      <div className="mb-4">
+        <label className="block font-semibold mb-2">Select Difficulty:</label>
+        <select
+          className="w-full p-2 border rounded"
+          value={difficulty}
+          onChange={(e) => setDifficulty(e.target.value)}
+        >
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>
         </select>
       </div>
-      <div className="flex flex-col mb-4">
-        <label>Number of Questions:</label>
-        <input type="number" min="1" max="50" value={numberOfQuestions} onChange={(e) => setNumberOfQuestions(e.target.value)} className="p-2 border rounded" />
+
+      {/* Number of Questions */}
+      <div className="mb-4">
+        <label className="block font-semibold mb-2">Number of Questions:</label>
+        <input
+          type="number"
+          min="1"
+          max="50"
+          value={amount}
+          className="w-full p-2 border rounded"
+          onChange={(e) => setAmount(e.target.value)}
+        />
       </div>
-      <button onClick={startQuiz} className="p-2 bg-blue-500 text-white rounded">Start Quiz</button>
+
+      {/* Start Quiz Button */}
+      <button
+        className="p-2 bg-blue-500 text-white rounded w-full"
+        onClick={handleStartQuiz}
+        disabled={!categoryId}
+      >
+        Start Quiz
+      </button>
     </div>
   );
 };

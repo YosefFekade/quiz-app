@@ -10,16 +10,18 @@ function App() {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
+  const [userAnswers, setUserAnswers] = useState([]); // Track user's answers
   const [categories, setCategories] = useState([]);
   const [history, setHistory] = useState([]);
+  const [selectedCategoryName, setSelectedCategoryName] = useState(''); // Track selected category name
 
-  // Load the quiz history from localStorage when the app starts
+  // Load quiz history from local storage
   useEffect(() => {
     const storedHistory = JSON.parse(localStorage.getItem('quizHistory')) || [];
     setHistory(storedHistory);
   }, []);
 
-  // Fetch categories when the app loads
+  // Fetch categories from Open Trivia API
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await fetch('https://opentdb.com/api_category.php');
@@ -29,22 +31,30 @@ function App() {
     fetchCategories();
   }, []);
 
-  // Start quiz by fetching questions from API
-  const startQuiz = async (category, difficulty, amount) => {
-    const fetchedQuestions = await fetchQuizQuestions(category, difficulty, amount);
+  // Start the quiz based on selected category, difficulty, and number of questions
+  const startQuiz = async (categoryId, categoryName, difficulty, amount) => {
+    const fetchedQuestions = await fetchQuizQuestions(categoryId, difficulty, amount);
     setQuestions(fetchedQuestions);
     setCurrentQuestionIndex(0);
     setScore(0);
+    setUserAnswers([]); // Reset user answers
+    setSelectedCategoryName(categoryName); // Store the selected category name
     setQuizStarted(true);
   };
 
-  // Handle answer selection and score increment
+  // Handle answer selection
   const handleAnswerSelect = (selectedAnswer) => {
     const correctAnswer = questions[currentQuestionIndex].correct_answer;
+
+    // Record the user's answer
+    setUserAnswers((prevAnswers) => [...prevAnswers, selectedAnswer]);
+
+    // Update score if the answer is correct
     if (selectedAnswer === correctAnswer) {
       setScore((prevScore) => prevScore + 1);
     }
 
+    // Move to the next question or finish the quiz
     if (currentQuestionIndex + 1 < questions.length) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
@@ -52,10 +62,10 @@ function App() {
     }
   };
 
-  // Finish quiz and store result in history
+  // Finish the quiz and store the result in history
   const finishQuiz = () => {
     const newEntry = {
-      topic: categories.find((cat) => cat.id === questions[0].category)?.name || 'Unknown',
+      topic: selectedCategoryName, // Use the stored category name
       score,
       total: questions.length,
       date: new Date().toLocaleString(),
@@ -65,16 +75,16 @@ function App() {
     setHistory(updatedHistory);
     localStorage.setItem('quizHistory', JSON.stringify(updatedHistory));
 
-    setQuizStarted(false); // Quiz finished
+    setQuizStarted(false); // Stop quiz mode and show the score summary
   };
 
-  // Retake quiz or start a new one
+  // Reset the quiz and allow the user to start over
   const retakeQuiz = () => {
     setQuizStarted(false);
     setQuestions([]);
   };
 
-  // Clear quiz history
+  // Clear the history of previous quizzes
   const clearHistory = () => {
     localStorage.removeItem('quizHistory');
     setHistory([]);
@@ -82,15 +92,32 @@ function App() {
 
   return (
     <div className="container mx-auto p-4">
+      {/* Case 1: No quiz started and no quiz completed */}
       {!quizStarted && questions.length === 0 ? (
         <>
+          {/* QuizStart component with the search bar for quiz topics */}
           <QuizStart categories={categories} onStartQuiz={startQuiz} />
+          {/* If quiz history exists, display it */}
           {history.length > 0 && <QuizHistory history={history} clearHistory={clearHistory} />}
         </>
-      ) : !quizStarted ? (
-        <ScoreSummary score={score} total={questions.length} onRetakeQuiz={retakeQuiz} />
-      ) : (
-        <QuestionCard question={questions[currentQuestionIndex]} onAnswerSelect={handleAnswerSelect} />
+      ) : /* Case 2: Quiz has ended, show score summary */
+      !quizStarted && questions.length > 0 ? (
+        <ScoreSummary
+          score={score}
+          total={questions.length}
+          questions={questions}
+          userAnswers={userAnswers}
+          onRetakeQuiz={retakeQuiz}
+        />
+      ) : /* Case 3: Quiz is ongoing, display question card */
+      (
+        <QuestionCard
+          question={questions[currentQuestionIndex]}
+          onAnswerSelect={handleAnswerSelect}
+          currentQuestionIndex={currentQuestionIndex}
+          totalQuestions={questions.length}
+          score={score}
+        />
       )}
     </div>
   );
