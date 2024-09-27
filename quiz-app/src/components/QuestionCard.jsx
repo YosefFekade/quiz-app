@@ -41,8 +41,8 @@ const QuestionCard = ({ question, onAnswerSelect, currentQuestionIndex, totalQue
             key={index}
             className={`p-2 rounded border 
               ${selectedAnswer ? 
-                (answer === correctAnswer ? 'bg-green-500 text-white' : answer === selectedAnswer ? 'bg-red-500 text-white' : 'bg-gray-200') 
-                : 'bg-gray-200 dark:bg-gray-200 dark:text-gray-800'}
+                (answer === correctAnswer ? 'bg-green-500 text-white dark:bg-green-400 ' : answer === selectedAnswer ? 'bg-red-500 text-white  dark:bg-red-400' : 'bg-gray-200 dark:bg-gray-800 dark:text-gray-200') 
+                : 'bg-gray-200 dark:bg-gray-800 dark:text-gray-200'}
             `}
             onClick={() => !isAnswered && handleAnswerClick(answer)}
             dangerouslySetInnerHTML={{ __html: answer }}
