@@ -42,7 +42,7 @@ const QuestionCard = ({ question, onAnswerSelect, currentQuestionIndex, totalQue
             className={`p-2 rounded border 
               ${selectedAnswer ? 
                 (answer === correctAnswer ? 'bg-green-500 text-white' : answer === selectedAnswer ? 'bg-red-500 text-white' : 'bg-gray-200') 
-                : 'bg-gray-200'}
+                : 'bg-gray-200 dark:bg-gray-200 dark:text-gray-800'}
             `}
             onClick={() => !isAnswered && handleAnswerClick(answer)}
             dangerouslySetInnerHTML={{ __html: answer }}

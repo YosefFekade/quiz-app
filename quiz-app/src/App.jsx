@@ -15,6 +15,7 @@ function App() {
   const [history, setHistory] = useState([]);
   const [selectedCategoryName, setSelectedCategoryName] = useState('');
   const [error, setError] = useState(null); // Track error state
+  const [theme, setTheme] = useState('light'); // Light by default
 
   useEffect(() => {
     const storedHistory = JSON.parse(localStorage.getItem('quizHistory')) || [];
@@ -95,45 +96,78 @@ function App() {
     localStorage.removeItem('quizHistory');
     setHistory([]);
   };
+  
+  // Load saved theme from localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+      document.documentElement.classList.add(savedTheme);
+    }
+  }, []);
+
+  // Toggle theme between light and dark
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    document.documentElement.classList.remove(theme);
+    document.documentElement.classList.add(newTheme);
+    localStorage.setItem('theme', newTheme); // Save preference in localStorage
+  };
 
   return (
-    <div className="container mx-auto p-4">
-      {error ? (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-          <strong className="font-bold">Error: </strong>
-          <span className="block sm:inline">{error}</span>
-          <button
-            className="absolute right-0 top-0 mt-2 mr-2"
-            onClick={() => setError(null)}
-          >
-            <span>&times;</span>
-          </button>
-        </div>
-      ) : null}
+    <div className={`${theme === 'dark' ? 'dark' : ''}`}>
+      <div className="p-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 min-h-screen">
+          {/* Dark mode toggle button */}
+          <div className="p-4 flex justify-end">
+            <button
+              onClick={toggleTheme}
+              className="bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-700 dark:bg-gray-200 dark:text-gray-800 dark:hover:bg-gray-300 transition-colors"
+            >
+              {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+            </button>
+          </div>
 
-      {!quizStarted && questions.length === 0 && !error ? (
-        <>
-          <QuizStart categories={categories} onStartQuiz={startQuiz} />
-          {history.length > 0 && <QuizHistory history={history} clearHistory={clearHistory} />}
-        </>
-      ) : !quizStarted && questions.length > 0 && !error ? (
-        <ScoreSummary
-          score={score}
-          total={questions.length}
-          questions={questions}
-          userAnswers={userAnswers}
-          onRetakeQuiz={retakeQuiz}
-        />
-      ) : (
-        <QuestionCard
-          question={questions[currentQuestionIndex]}
-          onAnswerSelect={handleAnswerSelect}
-          currentQuestionIndex={currentQuestionIndex}
-          totalQuestions={questions.length}
-          score={score}
-        />
-      )}
+          {error ? (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+              <strong className="font-bold">Error: </strong>
+              <span className="block sm:inline">{error}</span>
+              <button
+                className="absolute right-0 top-0 mt-2 mr-2"
+                onClick={() => setError(null)}
+              >
+                <span>&times;</span>
+              </button>
+            </div>
+          ) : null}
+
+          {!quizStarted && questions.length === 0 && !error ? (
+            <>
+              <QuizStart categories={categories} onStartQuiz={startQuiz} />
+              {history.length > 0 && <QuizHistory history={history} clearHistory={clearHistory} />}
+            </>
+          ) : !quizStarted && questions.length > 0 && !error ? (
+            <ScoreSummary
+              score={score}
+              total={questions.length}
+              questions={questions}
+              userAnswers={userAnswers}
+              onRetakeQuiz={retakeQuiz}
+            />
+          ) : (
+            <QuestionCard
+              question={questions[currentQuestionIndex]}
+              onAnswerSelect={handleAnswerSelect}
+              currentQuestionIndex={currentQuestionIndex}
+              totalQuestions={questions.length}
+              score={score}
+            />
+          )}
+      </div>
     </div>
+
+      
+    
   );
 }
 
