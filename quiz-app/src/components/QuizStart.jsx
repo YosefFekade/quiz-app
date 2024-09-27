@@ -5,7 +5,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [difficulty, setDifficulty] = useState('easy');
-  const [numQuestions, setNumQuestions] = useState(10);
+  const [numQuestions, setNumQuestions] = useState(5);
 
   // Filter the categories based on the search query
   const filteredCategories = categories.filter((category) =>
