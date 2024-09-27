@@ -1,74 +1,80 @@
 import React, { useState } from 'react';
 
 const QuizStart = ({ categories, onStartQuiz }) => {
-  const [categoryId, setCategoryId] = useState('');
-  const [categoryName, setCategoryName] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [difficulty, setDifficulty] = useState('easy');
-  const [amount, setAmount] = useState(5);
-  const [searchQuery, setSearchQuery] = useState(''); // State to track the search query
+  const [numQuestions, setNumQuestions] = useState(10);
 
-  // Filter categories based on the search query
-  const filteredCategories = categories.filter((cat) =>
-    cat.name.toLowerCase().includes(searchQuery.toLowerCase())
+  // Filter the categories based on the search query
+  const filteredCategories = categories.filter((category) =>
+    category.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Handle category selection and also store category name
-  const handleCategoryChange = (e) => {
-    const selectedId = e.target.value;
-    const selectedCategory = categories.find((cat) => cat.id == selectedId);
-
-    setCategoryId(selectedId);
-    setCategoryName(selectedCategory?.name || '');
+  const handleStartQuiz = () => {
+    if (selectedCategory) {
+      onStartQuiz(selectedCategory.id, selectedCategory.name, difficulty, numQuestions);
+    }
   };
 
-  // Handle start quiz
-  const handleStartQuiz = () => {
-    onStartQuiz(categoryId, categoryName, difficulty, amount);
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    setSearchQuery(category.name);
+    setDropdownOpen(false); // Close the dropdown on selection
   };
 
   return (
-    <div className="quiz-start p-4 border rounded shadow-md max-w-md mx-auto">
+    <div className="p-4 bg-white shadow-md rounded-md">
       <h2 className="text-2xl font-bold mb-4">Start a Quiz</h2>
 
-      {/* Search bar for quiz topics */}
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Search quiz topics..."
-          className="w-full p-2 border rounded"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+      {/* Filterable Dropdown for Categories */}
+      <div className="mb-4 relative">
+        <label className="block text-lg mb-2">Select a Category</label>
+        <div
+          className="relative"
+          onClick={() => setDropdownOpen((prev) => !prev)}
+        >
+          <input
+            type="text"
+            placeholder="Search or select a category..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setDropdownOpen(true); // Show dropdown when user types
+            }}
+            className="border px-4 py-2 rounded-md w-full cursor-pointer"
+            readOnly={dropdownOpen ? false : true} // Disable typing when dropdown is closed
+          />
+        </div>
+
+        {/* Dropdown Menu */}
+        {dropdownOpen && (
+          <ul className="absolute z-10 mt-1 w-full bg-white border rounded-md max-h-60 overflow-y-auto">
+            {filteredCategories.length > 0 ? (
+              filteredCategories.map((category) => (
+                <li
+                  key={category.id}
+                  onClick={() => handleCategorySelect(category)}
+                  className="px-4 py-2 cursor-pointer hover:bg-blue-100"
+                >
+                  {category.name}
+                </li>
+              ))
+            ) : (
+              <li className="px-4 py-2 text-gray-500">No categories found</li>
+            )}
+          </ul>
+        )}
       </div>
 
-      {/* Display filtered categories */}
-      {filteredCategories.length > 0 ? (
-        <div className="mb-4">
-          <label className="block font-semibold mb-2">Select Topic:</label>
-          <select
-            className="w-full p-2 border rounded"
-            value={categoryId}
-            onChange={handleCategoryChange}
-          >
-            <option value="">-- Select a category --</option>
-            {filteredCategories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      ) : (
-        <p className="text-red-500 mb-4">No quiz topics found for "{searchQuery}".</p>
-      )}
-
-      {/* Difficulty Level */}
+      {/* Difficulty selection */}
       <div className="mb-4">
-        <label className="block font-semibold mb-2">Select Difficulty:</label>
+        <label className="block text-lg mb-2">Select Difficulty</label>
         <select
-          className="w-full p-2 border rounded"
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
+          className="border px-4 py-2 rounded-md w-full"
         >
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
@@ -76,24 +82,24 @@ const QuizStart = ({ categories, onStartQuiz }) => {
         </select>
       </div>
 
-      {/* Number of Questions */}
+      {/* Number of questions */}
       <div className="mb-4">
-        <label className="block font-semibold mb-2">Number of Questions:</label>
+        <label className="block text-lg mb-2">Number of Questions</label>
         <input
           type="number"
           min="1"
           max="50"
-          value={amount}
-          className="w-full p-2 border rounded"
-          onChange={(e) => setAmount(e.target.value)}
+          value={numQuestions}
+          onChange={(e) => setNumQuestions(e.target.value)}
+          className="border px-4 py-2 rounded-md w-full"
         />
       </div>
 
       {/* Start Quiz Button */}
       <button
-        className="p-2 bg-blue-500 text-white rounded w-full"
+        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
         onClick={handleStartQuiz}
-        disabled={!categoryId}
+        disabled={!selectedCategory}
       >
         Start Quiz
       </button>
