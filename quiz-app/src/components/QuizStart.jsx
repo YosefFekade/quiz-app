@@ -32,7 +32,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
         <label className="block text-lg mb-2 text-gray-900 dark:text-gray-100">Select a Category</label>
         <input
           type="text"
-          placeholder="Search or select a category..."
+          placeholder="Search for a category..."
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
