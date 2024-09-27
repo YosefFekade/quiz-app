@@ -32,7 +32,7 @@ const ScoreSummary = ({ score, total, questions, userAnswers, onRetakeQuiz }) =>
         className="p-2 bg-blue-500 text-white rounded mt-4" 
         onClick={onRetakeQuiz}
       >
-        Retake Quiz
+        Take another quiz
       </button>
     </div>
   );
