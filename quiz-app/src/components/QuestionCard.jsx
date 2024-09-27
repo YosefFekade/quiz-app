@@ -26,7 +26,7 @@ const QuestionCard = ({ question, onAnswerSelect, currentQuestionIndex, totalQue
         <div className="text-xl font-bold">Question {currentQuestionIndex + 1} / {totalQuestions}</div>
         
         {/* Score Circle */}
-        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500 text-white font-bold">
+        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-500 text-white font-bold">
           {score}
         </div>
       </div>

@@ -10,13 +10,13 @@ const QuizHistory = ({ history, clearHistory }) => {
           {history.map((entry, index) => (
             <li key={index} className="p-4 border rounded shadow-sm">
               <div className="font-semibold">
-                <span className="text-gray-700">Topic:</span> {entry.topic || 'Unknown Topic'}
+                <span className="text-gray-700  dark:text-gray-200">Topic:</span> {entry.topic || 'Unknown Topic'}
               </div>
               <div>
-                <span className="text-gray-700">Score:</span> {entry.score} / {entry.total}
+                <span className="text-gray-700 dark:text-gray-200">Score:</span> {entry.score} / {entry.total}
               </div>
               <div>
-                <span className="text-gray-700">Date:</span> {entry.date}
+                <span className="text-gray-700 dark:text-gray-200">Date:</span> {entry.date}
               </div>
             </li>
           ))}
