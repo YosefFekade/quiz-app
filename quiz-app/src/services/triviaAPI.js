@@ -1,11 +1,21 @@
-import axios from 'axios';
+export const fetchQuizQuestions = async (categoryId, difficulty, amount) => {
+  const endpoint = `https://opentdb.com/api.php?amount=${amount}&category=${categoryId}&difficulty=${difficulty}&type=multiple`;
 
-export const fetchQuizQuestions = async (category, difficulty, amount) => {
-  const endpoint = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=multiple`;
-  const { data } = await axios.get(endpoint);
+  try {
+    const response = await fetch(endpoint);
 
-  return data.results.map((question) => ({
-    ...question,
-    answers: [question.correct_answer, ...question.incorrect_answers],
-  }));
+    if (!response.ok) {
+      throw new Error('Failed to fetch quiz questions. Please try again.');
+    }
+
+    const data = await response.json();
+
+    if (data.response_code !== 0 || !data.results.length) {
+      throw new Error('No questions available for the selected options.');
+    }
+
+    return data.results;
+  } catch (error) {
+    throw error;
+  }
 };

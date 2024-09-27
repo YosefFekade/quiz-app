@@ -4,7 +4,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
   const [categoryId, setCategoryId] = useState('');
   const [categoryName, setCategoryName] = useState('');
   const [difficulty, setDifficulty] = useState('easy');
-  const [amount, setAmount] = useState(10);
+  const [amount, setAmount] = useState(5);
   const [searchQuery, setSearchQuery] = useState(''); // State to track the search query
 
   // Filter categories based on the search query

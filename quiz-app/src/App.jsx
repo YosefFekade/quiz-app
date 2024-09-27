@@ -10,51 +10,59 @@ function App() {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [userAnswers, setUserAnswers] = useState([]); // Track user's answers
+  const [userAnswers, setUserAnswers] = useState([]);
   const [categories, setCategories] = useState([]);
   const [history, setHistory] = useState([]);
-  const [selectedCategoryName, setSelectedCategoryName] = useState(''); // Track selected category name
+  const [selectedCategoryName, setSelectedCategoryName] = useState('');
+  const [error, setError] = useState(null); // Track error state
 
-  // Load quiz history from local storage
   useEffect(() => {
     const storedHistory = JSON.parse(localStorage.getItem('quizHistory')) || [];
     setHistory(storedHistory);
   }, []);
 
-  // Fetch categories from Open Trivia API
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch('https://opentdb.com/api_category.php');
-      const data = await response.json();
-      setCategories(data.trivia_categories);
+      try {
+        const response = await fetch('https://opentdb.com/api_category.php');
+        const data = await response.json();
+        setCategories(data.trivia_categories);
+      } catch (error) {
+        setError('Failed to load quiz categories. Please try again.');
+      }
     };
     fetchCategories();
   }, []);
 
-  // Start the quiz based on selected category, difficulty, and number of questions
   const startQuiz = async (categoryId, categoryName, difficulty, amount) => {
-    const fetchedQuestions = await fetchQuizQuestions(categoryId, difficulty, amount);
-    setQuestions(fetchedQuestions);
-    setCurrentQuestionIndex(0);
-    setScore(0);
-    setUserAnswers([]); // Reset user answers
-    setSelectedCategoryName(categoryName); // Store the selected category name
-    setQuizStarted(true);
+    try {
+      const fetchedQuestions = await fetchQuizQuestions(categoryId, difficulty, amount);
+      
+      if (fetchedQuestions.length === 0) {
+        throw new Error('No questions available for the selected options.');
+      }
+
+      setQuestions(fetchedQuestions);
+      setCurrentQuestionIndex(0);
+      setScore(0);
+      setUserAnswers([]);
+      setSelectedCategoryName(categoryName);
+      setQuizStarted(true);
+      setError(null); // Clear any previous errors
+    } catch (error) {
+      setError(error.message || 'Failed to fetch quiz questions. Please try again.');
+    }
   };
 
-  // Handle answer selection
   const handleAnswerSelect = (selectedAnswer) => {
     const correctAnswer = questions[currentQuestionIndex].correct_answer;
 
-    // Record the user's answer
     setUserAnswers((prevAnswers) => [...prevAnswers, selectedAnswer]);
 
-    // Update score if the answer is correct
     if (selectedAnswer === correctAnswer) {
       setScore((prevScore) => prevScore + 1);
     }
 
-    // Move to the next question or finish the quiz
     if (currentQuestionIndex + 1 < questions.length) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
@@ -62,10 +70,9 @@ function App() {
     }
   };
 
-  // Finish the quiz and store the result in history
   const finishQuiz = () => {
     const newEntry = {
-      topic: selectedCategoryName, // Use the stored category name
+      topic: selectedCategoryName,
       score,
       total: questions.length,
       date: new Date().toLocaleString(),
@@ -75,16 +82,15 @@ function App() {
     setHistory(updatedHistory);
     localStorage.setItem('quizHistory', JSON.stringify(updatedHistory));
 
-    setQuizStarted(false); // Stop quiz mode and show the score summary
+    setQuizStarted(false);
   };
 
-  // Reset the quiz and allow the user to start over
   const retakeQuiz = () => {
     setQuizStarted(false);
     setQuestions([]);
+    setError(null); // Reset error state when restarting
   };
 
-  // Clear the history of previous quizzes
   const clearHistory = () => {
     localStorage.removeItem('quizHistory');
     setHistory([]);
@@ -92,16 +98,25 @@ function App() {
 
   return (
     <div className="container mx-auto p-4">
-      {/* Case 1: No quiz started and no quiz completed */}
-      {!quizStarted && questions.length === 0 ? (
+      {error ? (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+          <strong className="font-bold">Error: </strong>
+          <span className="block sm:inline">{error}</span>
+          <button
+            className="absolute right-0 top-0 mt-2 mr-2"
+            onClick={() => setError(null)}
+          >
+            <span>&times;</span>
+          </button>
+        </div>
+      ) : null}
+
+      {!quizStarted && questions.length === 0 && !error ? (
         <>
-          {/* QuizStart component with the search bar for quiz topics */}
           <QuizStart categories={categories} onStartQuiz={startQuiz} />
-          {/* If quiz history exists, display it */}
           {history.length > 0 && <QuizHistory history={history} clearHistory={clearHistory} />}
         </>
-      ) : /* Case 2: Quiz has ended, show score summary */
-      !quizStarted && questions.length > 0 ? (
+      ) : !quizStarted && questions.length > 0 && !error ? (
         <ScoreSummary
           score={score}
           total={questions.length}
@@ -109,8 +124,7 @@ function App() {
           userAnswers={userAnswers}
           onRetakeQuiz={retakeQuiz}
         />
-      ) : /* Case 3: Quiz is ongoing, display question card */
-      (
+      ) : (
         <QuestionCard
           question={questions[currentQuestionIndex]}
           onAnswerSelect={handleAnswerSelect}
