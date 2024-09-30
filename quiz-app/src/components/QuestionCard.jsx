@@ -59,6 +59,7 @@ const QuestionCard = ({ question, onAnswerSelect, currentQuestionIndex, totalQue
             onClick={() => onAnswerSelect(selectedAnswer)}
           >
             Next
+            
           </button>
         </div>
       )}
