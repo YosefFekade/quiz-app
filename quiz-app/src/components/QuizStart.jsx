@@ -25,7 +25,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
 
   return (
     <div className="p-4 bg-white dark:bg-gray-800 shadow-md rounded-md">
-      <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Start a Quiz</h2>
+      <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Start A Quiz</h2>
 
       {/* Filterable Dropdown for Categories */}
       <div className="mb-4 relative">
