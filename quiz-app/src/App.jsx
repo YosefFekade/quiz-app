@@ -143,8 +143,10 @@ function App() {
 
           {!quizStarted && questions.length === 0 && !error ? (
             <>
+            <div className='bg-teal-700'>
               <QuizStart categories={categories} onStartQuiz={startQuiz} />
               {history.length > 0 && <QuizHistory history={history} clearHistory={clearHistory} />}
+            </div>
             </>
           ) : !quizStarted && questions.length > 0 && !error ? (
             <ScoreSummary

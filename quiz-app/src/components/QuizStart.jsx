@@ -24,7 +24,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
   };
 
   return (
-    <div className="p-4 bg-white dark:bg-gray-800 shadow-md rounded-md">
+    <div className="p-4 w-30 bg-white dark:bg-gray-800 shadow-md rounded-md">
       <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Start A Quiz</h2>
 
       {/* Filterable Dropdown for Categories */}
