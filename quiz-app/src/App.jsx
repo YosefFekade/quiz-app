@@ -6,6 +6,7 @@ import ScoreSummary from './components/ScoreSummary';
 import QuizHistory from './components/QuizHistory';
 import Logo from './components/logo';
 import Footer from './components/footer';
+import Header from './components/header';
 
 function App() {
   const [quizStarted, setQuizStarted] = useState(false);
@@ -118,8 +119,9 @@ function App() {
   };
 
   return (
-    <div className={`${theme === 'dark' ? 'dark' : ''}`}>
-      <div className="p-4 bg-[#16A085] dark:bg-gray-800 text-gray-900 dark:text-gray-100 min-h-screen">
+    <div className={`${theme === 'dark' ? 'dark' : ''} bg-gradient-to-r from-blue-300 to-teal-600 `}>
+      <Header />
+      <div className=" p-4 dark:bg-gradient-to-r from-gray-900 to-gray-700 text-gray-900 dark:text-gray-100 min-h-screen">
           {/* Dark mode toggle button */}
           <div className="p-4 flex justify-end">
             <button
@@ -152,7 +154,7 @@ function App() {
               </div>
             </div>
               {history.length > 0 && (
-              <div className="bg-[#F8DD8D] p-4 rounded-lg dark:bg-gray-800"> 
+              <div className="bg-[#ccbe93] p-4 rounded-lg dark:bg-gray-800"> 
                 <QuizHistory history={history} clearHistory={clearHistory} />
               </div>
             )}
@@ -186,9 +188,6 @@ function App() {
       </div>
       <Footer />
     </div>
-
-      
-    
   );
 }
 
