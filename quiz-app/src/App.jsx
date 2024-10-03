@@ -147,12 +147,12 @@ function App() {
             <>
               <Logo />
              <div className="flex justify-center">
-              <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-6xl p-4">
+              <div className="w-full  lg:max-w-4xl xl:max-w-6xl p-4">
                 <QuizStart categories={categories} onStartQuiz={startQuiz} />
               </div>
             </div>
               {history.length > 0 && (
-              <div className="bg-[#F2C94C] p-4 rounded-lg dark:bg-gray-800"> 
+              <div className="bg-[#F8DD8D] p-4 rounded-lg dark:bg-gray-800"> 
                 <QuizHistory history={history} clearHistory={clearHistory} />
               </div>
             )}
@@ -160,7 +160,7 @@ function App() {
             </>
           ) : !quizStarted && questions.length > 0 && !error ? (
             <div className="flex justify-center">
-              <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-6xl p-4">
+              <div className="w-full  lg:max-w-4xl xl:max-w-6xl p-4">
             <ScoreSummary
               score={score}
               total={questions.length}
@@ -172,7 +172,7 @@ function App() {
             </div>
           ) : (
             <div className="flex justify-center">
-              <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-6xl p-4">
+              <div className="w-full  lg:max-w-4xl xl:max-w-6xl p-4">
             <QuestionCard
               question={questions[currentQuestionIndex]}
               onAnswerSelect={handleAnswerSelect}
