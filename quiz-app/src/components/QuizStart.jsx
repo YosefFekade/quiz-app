@@ -24,12 +24,12 @@ const QuizStart = ({ categories, onStartQuiz }) => {
   };
 
   return (
-    <div className="p-4 bg-white dark:bg-gray-800 shadow-md rounded-md">
-      <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Start A Quiz</h2>
+    <div className="p-4 text-center bg-white mb-4 dark:bg-gray-800 shadow-md rounded-md">
+      <h2 className="text-2xl text-center font-bold mb-4 text-gray-900 dark:text-gray-100">Start A Quiz</h2>
 
       {/* Filterable Dropdown for Categories */}
       <div className="mb-4 relative">
-        <label className="block text-lg mb-2 text-gray-900 dark:text-gray-100">Select a Category</label>
+        <label className="block text-left text-lg mb-2 text-gray-900 dark:text-gray-100">Select a Category</label>
         <input
           type="text"
           placeholder="Search for a category..."
@@ -61,7 +61,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
 
       {/* Difficulty selection */}
       <div className="mb-4">
-        <label className="block text-lg mb-2 text-gray-900 dark:text-gray-100">Select Difficulty</label>
+        <label className="block text-left text-lg mb-2 text-gray-900 dark:text-gray-100">Select Difficulty</label>
         <select
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
@@ -75,7 +75,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
 
       {/* Number of questions */}
       <div className="mb-4">
-        <label className="block text-lg mb-2 text-gray-900 dark:text-gray-100">Number of Questions</label>
+        <label className="block text-left text-lg mb-2 text-gray-900 dark:text-gray-100">Number of Questions</label>
         <input
           type="number"
           min="1"

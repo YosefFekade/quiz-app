@@ -20,7 +20,7 @@ const QuestionCard = ({ question, onAnswerSelect, currentQuestionIndex, totalQue
   };
 
   return (
-    <div className="question-card p-4 border rounded shadow-md mb-4">
+    <div className="question-card bg-white p-4 border rounded shadow-md mb-4">
       {/* Question Number Display */}
       <div className="flex justify-between items-center mb-4">
         <div className="text-xl font-bold">Question {currentQuestionIndex + 1} / {totalQuestions}</div>

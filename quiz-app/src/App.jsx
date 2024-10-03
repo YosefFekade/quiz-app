@@ -119,7 +119,7 @@ function App() {
 
   return (
     <div className={`${theme === 'dark' ? 'dark' : ''}`}>
-      <div className="p-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 min-h-screen">
+      <div className="p-4 bg-[#16A085] dark:bg-gray-800 text-gray-900 dark:text-gray-100 min-h-screen">
           {/* Dark mode toggle button */}
           <div className="p-4 flex justify-end">
             <button
@@ -147,7 +147,11 @@ function App() {
             <>
               <Logo />
               <QuizStart categories={categories} onStartQuiz={startQuiz} />
-              {history.length > 0 && <QuizHistory history={history} clearHistory={clearHistory} />}
+              {history.length > 0 && (
+              <div className="bg-[#F2C94C] p-4 rounded-lg"> 
+                <QuizHistory history={history} clearHistory={clearHistory} />
+              </div>
+            )}
               <Footer />
             </>
           ) : !quizStarted && questions.length > 0 && !error ? (
