@@ -5,6 +5,7 @@ import QuestionCard from './components/QuestionCard';
 import ScoreSummary from './components/ScoreSummary';
 import QuizHistory from './components/QuizHistory';
 import Logo from './components/logo';
+import Footer from './components/footer';
 
 function App() {
   const [quizStarted, setQuizStarted] = useState(false);
@@ -147,6 +148,7 @@ function App() {
               <Logo />
               <QuizStart categories={categories} onStartQuiz={startQuiz} />
               {history.length > 0 && <QuizHistory history={history} clearHistory={clearHistory} />}
+              <Footer />
             </>
           ) : !quizStarted && questions.length > 0 && !error ? (
             <ScoreSummary
