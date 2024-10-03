@@ -4,6 +4,7 @@ import QuizStart from './components/QuizStart';
 import QuestionCard from './components/QuestionCard';
 import ScoreSummary from './components/ScoreSummary';
 import QuizHistory from './components/QuizHistory';
+import Logo from './components/logo';
 
 function App() {
   const [quizStarted, setQuizStarted] = useState(false);
@@ -143,10 +144,9 @@ function App() {
 
           {!quizStarted && questions.length === 0 && !error ? (
             <>
-            <div className='bg-teal-700'>
+              <Logo />
               <QuizStart categories={categories} onStartQuiz={startQuiz} />
               {history.length > 0 && <QuizHistory history={history} clearHistory={clearHistory} />}
-            </div>
             </>
           ) : !quizStarted && questions.length > 0 && !error ? (
             <ScoreSummary
