@@ -156,7 +156,7 @@ function App() {
                 <QuizHistory history={history} clearHistory={clearHistory} />
               </div>
             )}
-              <Footer />
+              
             </>
           ) : !quizStarted && questions.length > 0 && !error ? (
             <div className="flex justify-center">
@@ -184,6 +184,7 @@ function App() {
             </div>
           )}
       </div>
+      <Footer />
     </div>
 
       
