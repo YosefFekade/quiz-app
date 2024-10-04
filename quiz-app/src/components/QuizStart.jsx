@@ -6,22 +6,25 @@ const QuizStart = ({ categories, onStartQuiz }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [difficulty, setDifficulty] = useState('easy');
   const [numQuestions, setNumQuestions] = useState(5);
-
+  
+  // Filters the categories passed as props from APP.jsx
   const filteredCategories = categories.filter((category) =>
-    category.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+    category.name.toLowerCase().includes(searchQuery.toLowerCase())// The filter method checks if each category’s name includes a text in the searchQuery typed by the user
+  )
 
+  {/* Function to make sure user has selected a catagory to move on to the questions */}
   const handleStartQuiz = () => {
     if (selectedCategory) {
-      onStartQuiz(selectedCategory.id, selectedCategory.name, difficulty, numQuestions);
+      onStartQuiz(selectedCategory.id, selectedCategory.name, difficulty, numQuestions) // This will send input values of the user to the app.jsx as parameters
     }
-  };
+  }
 
+  {/* This function will handel the selection process when a category is chosen from the dropdown*/}
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
     setSearchQuery(category.name);
     setDropdownOpen(false); // Close the dropdown on selection
-  };
+  }
 
   return (
     <div className="p-4 text-center bg-white mb-4 dark:bg-gray-800 shadow-md rounded-md">
@@ -53,7 +56,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
                 </li>
               ))
             ) : (
-              <li className="px-4 py-2 text-gray-500 dark:text-gray-300">No categories found</li>
+              <li className="px-4 py-2 text-red-500 dark:text-red-300">No categories found</li>
             )}
           </ul>
         )}
@@ -79,7 +82,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
         <input
           type="number"
           min="1"
-          max="50"
+          max="25"
           value={numQuestions}
           onChange={(e) => setNumQuestions(e.target.value)}
           className="border px-4 py-2 rounded-md w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
@@ -96,6 +99,6 @@ const QuizStart = ({ categories, onStartQuiz }) => {
       </button>
     </div>
   );
-};
+}
 
 export default QuizStart;

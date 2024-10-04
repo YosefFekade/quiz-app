@@ -25,6 +25,7 @@ function App() {
     setHistory(storedHistory);
   }, []);
 
+  // Fetching catagories from API
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -36,11 +37,12 @@ function App() {
       }
     };
     fetchCategories();
-  }, []);
+  }, []) 
 
-  const startQuiz = async (categoryId, categoryName, difficulty, amount) => {
+// Logic to triger the question card , function sent as a prop to Question start
+  const startQuiz = async (categoryId, categoryName, difficulty, amount) => {  
     try {
-      const fetchedQuestions = await fetchQuizQuestions(categoryId, difficulty, amount);
+      const fetchedQuestions = await fetchQuizQuestions(categoryId, difficulty, amount); //goes to triviaAPI to recive questions based on users input
       
       if (fetchedQuestions.length === 0) {
         throw new Error('No questions available for the selected options.');
@@ -56,7 +58,7 @@ function App() {
     } catch (error) {
       setError(error.message || 'Failed to fetch quiz questions. Please try again.');
     }
-  };
+  }
 
   const handleAnswerSelect = (selectedAnswer) => {
     const correctAnswer = questions[currentQuestionIndex].correct_answer;
