@@ -2,8 +2,8 @@ import React from 'react';
 
 const QuizHistory = ({ history, clearHistory }) => {
   return (
-    <div className="quiz-history p-4 border rounded shadow-md border-black max-w-md mx-auto mt-8">
-      <h2 className="text-2xl font-bold mb-4">Quiz History</h2>
+    <div className="quiz-history p-4 border rounded shadow-md  border-black max-w-md mx-auto mt-8">
+      <h2 className="text-center text-2xl font-bold mb-4">Quiz History</h2>
       
       {history.length > 0 ? (
         <ul className="space-y-4">

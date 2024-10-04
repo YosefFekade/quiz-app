@@ -154,7 +154,7 @@ function App() {
               </div>
             </div>
               {history.length > 0 && (
-              <div className="bg-[#ccbe93] p-4 rounded-lg dark:bg-gray-800"> 
+              <div className=" p-4 rounded-lg dark:bg-gray-800"> 
                 <QuizHistory history={history} clearHistory={clearHistory} />
               </div>
             )}
