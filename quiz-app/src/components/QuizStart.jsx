@@ -7,7 +7,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
   const [difficulty, setDifficulty] = useState('easy');
   const [numQuestions, setNumQuestions] = useState(5);
   
-  // Filters the categories passed as props from APP.jsx
+  // Filters the categories based on the search query from the user 
   const filteredCategories = categories.filter((category) =>
     category.name.toLowerCase().includes(searchQuery.toLowerCase())// The filter method checks if each category’s name includes a text in the searchQuery typed by the user
   )
@@ -19,7 +19,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
     }
   }
 
-  {/* This function will handel the selection process when a category is chosen from the dropdown*/}
+  {/* Function to handel selection of a catagory when triggered from the dropdown*/}
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
     setSearchQuery(category.name);
@@ -35,7 +35,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
         <label className="block text-left text-lg mb-2 text-gray-900 dark:text-gray-100">Select a Category</label>
         <input
           type="text"
-          placeholder="Search for a category..."
+          placeholder="Search for a category to start a Quiz..."
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
@@ -43,14 +43,15 @@ const QuizStart = ({ categories, onStartQuiz }) => {
           }}
           className="border px-4 py-2 rounded-md w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
         />
+        {/* Dropdown logic controlled by a ternary operator*/}
         {dropdownOpen && (
           <ul className="absolute z-10 mt-1 w-full bg-white dark:bg-gray-700 border rounded-md max-h-60 overflow-y-auto">
             {filteredCategories.length > 0 ? (
-              filteredCategories.map((category) => (
+              filteredCategories.map((category) => (  // logic will make it displays only categories that match the search query
                 <li
                   key={category.id}
-                  onClick={() => handleCategorySelect(category)}
-                  className="px-4 py-2 cursor-pointer hover:bg-blue-100 dark:hover:bg-gray-600"
+                  onClick={() => handleCategorySelect(category)} //passing in the catagory that was selected by a user as a parameter to the handle function
+                  className="px-4 py-2 cursor-pointer hover:bg-blue-200 dark:hover:bg-gray-600"
                 >
                   {category.name}
                 </li>

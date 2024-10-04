@@ -25,7 +25,7 @@ const QuizHistory = ({ history, clearHistory }) => {
           ))}
         </ul>
       ) : (
-        <p>No quiz history available.</p>
+        null
       )}
 
       {history.length > 0 && (
