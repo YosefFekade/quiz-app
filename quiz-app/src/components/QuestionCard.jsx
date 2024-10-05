@@ -9,15 +9,16 @@ const QuestionCard = ({ question, onAnswerSelect, currentQuestionIndex, totalQue
   useEffect(() => {
     const answers = [question.correct_answer, ...question.incorrect_answers];
     setShuffledAnswers(answers.sort(() => Math.random() - 0.5)) //This randomization ensures that the correct answer is not always in the same position.
+    //Reseting logic
     setSelectedAnswer(null); // Reset the selected answer on question change
     setIsAnswered(false); // Reset the answered state on question change
-  }, [question]);
+  }, [question])
 
   const handleAnswerClick = (answer) => {
     setSelectedAnswer(answer)
     setCorrectAnswer(question.correct_answer);
     setIsAnswered(true); // Mark the question as answered
-  };
+  }
 
   return (
     <div className="question-card bg-white p-4 border rounded shadow-md mb-4  dark:bg-gray-800">
