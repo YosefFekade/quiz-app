@@ -8,13 +8,13 @@ const QuestionCard = ({ question, onAnswerSelect, currentQuestionIndex, totalQue
 
   useEffect(() => {
     const answers = [question.correct_answer, ...question.incorrect_answers];
-    setShuffledAnswers(answers.sort(() => Math.random() - 0.5));
+    setShuffledAnswers(answers.sort(() => Math.random() - 0.5)) //This randomization ensures that the correct answer is not always in the same position.
     setSelectedAnswer(null); // Reset the selected answer on question change
     setIsAnswered(false); // Reset the answered state on question change
   }, [question]);
 
   const handleAnswerClick = (answer) => {
-    setSelectedAnswer(answer);
+    setSelectedAnswer(answer)
     setCorrectAnswer(question.correct_answer);
     setIsAnswered(true); // Mark the question as answered
   };
@@ -43,7 +43,7 @@ const QuestionCard = ({ question, onAnswerSelect, currentQuestionIndex, totalQue
               ${selectedAnswer ? 
                 (answer === correctAnswer ? 'bg-green-500 text-white dark:bg-green-400 ' : answer === selectedAnswer ? 'bg-red-500 text-white  dark:bg-red-400' : 'bg-gray-200 dark:bg-gray-800 dark:text-gray-200') 
                 : 'bg-gray-200 dark:bg-gray-800 dark:text-gray-200'}
-            `}
+            `} //Conditinally renders to show the correct and incorrect answer after the user has selected the answer by clicking the button
             onClick={() => !isAnswered && handleAnswerClick(answer)}
             dangerouslySetInnerHTML={{ __html: answer }}
             disabled={isAnswered} // Disable answers once one is selected
@@ -52,7 +52,7 @@ const QuestionCard = ({ question, onAnswerSelect, currentQuestionIndex, totalQue
       </div>
 
       {/* Next Button */}
-      {isAnswered && (
+      {isAnswered && ( // When only answered the next button appear
         <div className="mt-4 text-center">
           <button
             className="p-2 bg-blue-500 text-white rounded"
