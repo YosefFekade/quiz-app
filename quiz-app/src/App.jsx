@@ -60,6 +60,7 @@ function App() {
     }
   }
 
+ //This function is used to handel the user’s selection.
   const handleAnswerSelect = (selectedAnswer) => {
     const correctAnswer = questions[currentQuestionIndex].correct_answer;
 
