@@ -35,6 +35,6 @@ const QuizHistory = ({ history, clearHistory }) => {
       )}
     </div>
   );
-};
+}
 
 export default QuizHistory;

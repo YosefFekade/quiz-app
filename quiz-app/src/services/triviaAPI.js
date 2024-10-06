@@ -18,4 +18,4 @@ export const fetchQuizQuestions = async (categoryId, difficulty, amount) => {
   } catch (error) {
     throw error;
   }
-};
+}
