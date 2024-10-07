@@ -146,7 +146,7 @@ function App() {
                 <span>&times;</span>
               </button>
             </div>
-          ) : null};
+          ) : null}
 
           {!quizStarted && questions.length === 0 && !error ? (
             <>
