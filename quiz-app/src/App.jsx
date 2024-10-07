@@ -1,42 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { fetchQuizQuestions } from './services/triviaAPI';
-import QuizStart from './components/QuizStart';
-import QuestionCard from './components/QuestionCard';
-import ScoreSummary from './components/ScoreSummary';
-import QuizHistory from './components/QuizHistory';
-import Logo from './components/logo';
-import Footer from './components/footer';
-import Header from './components/header';
+import React, { useState, useEffect } from 'react'
+import { fetchQuizQuestions } from './services/triviaAPI'
+import QuizStart from './components/QuizStart'
+import QuestionCard from './components/QuestionCard'
+import ScoreSummary from './components/ScoreSummary'
+import QuizHistory from './components/QuizHistory'
+import Logo from './components/logo'
+import Footer from './components/footer'
+import Header from './components/header'
 
 function App() {
-  const [quizStarted, setQuizStarted] = useState(false);
-  const [questions, setQuestions] = useState([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [score, setScore] = useState(0);
-  const [userAnswers, setUserAnswers] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [history, setHistory] = useState([]);
-  const [selectedCategoryName, setSelectedCategoryName] = useState('');
-  const [error, setError] = useState(null); // Track error state
-  const [theme, setTheme] = useState('light'); // Light by default
+  const [quizStarted, setQuizStarted] = useState(false)
+  const [questions, setQuestions] = useState([])
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [score, setScore] = useState(0)
+  const [userAnswers, setUserAnswers] = useState([])
+  const [categories, setCategories] = useState([])
+  const [history, setHistory] = useState([])
+  const [selectedCategoryName, setSelectedCategoryName] = useState('')
+  const [error, setError] = useState(null) // Track error state
+  const [theme, setTheme] = useState('light') // Light by default
 
   useEffect(() => {
-    const storedHistory = JSON.parse(localStorage.getItem('quizHistory')) || [];
+    const storedHistory = JSON.parse(localStorage.getItem('quizHistory')) || []
     setHistory(storedHistory)
-  }, []);
+  }, [])
 
   // Fetching catagories from API
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('https://opentdb.com/api_category.php');
-        const data = await response.json();
-        setCategories(data.trivia_categories);
+        const response = await fetch('https://opentdb.com/api_category.php')
+        const data = await response.json()
+        setCategories(data.trivia_categories)
       } catch (error) {
-        setError('Failed to load quiz categories. Please try again.');
+        setError('Failed to load quiz categories. Please try again.')
       }
     }
-    fetchCategories();
+    fetchCategories()
   }, []) 
 
 // Logic to triger the question card , function sent as a prop to Question start
@@ -45,37 +45,37 @@ function App() {
       const fetchedQuestions = await fetchQuizQuestions(categoryId, difficulty, amount); //goes to triviaAPI to recive questions based on users input
       
       if (fetchedQuestions.length === 0) {
-        throw new Error('No questions available for the selected options.');
+        throw new Error('No questions available for the selected options.')
       }
 
-      setQuestions(fetchedQuestions);
-      setCurrentQuestionIndex(0);
-      setScore(0);
-      setUserAnswers([]);
-      setSelectedCategoryName(categoryName);
-      setQuizStarted(true);
+      setQuestions(fetchedQuestions)
+      setCurrentQuestionIndex(0)
+      setScore(0)
+      setUserAnswers([])
+      setSelectedCategoryName(categoryName)
+      setQuizStarted(true)
       setError(null) // Clear any previous errors
     } catch (error) {
-      setError(error.message || 'Failed to fetch quiz questions. Please try again.');
+      setError(error.message || 'Failed to fetch quiz questions. Please try again.')
     }
   }
 
  //This function is used to handel the user’s selection.
   const handleAnswerSelect = (selectedAnswer) => {
-    const correctAnswer = questions[currentQuestionIndex].correct_answer;
+    const correctAnswer = questions[currentQuestionIndex].correct_answer
 
-    setUserAnswers((prevAnswers) => [...prevAnswers, selectedAnswer]);
+    setUserAnswers((prevAnswers) => [...prevAnswers, selectedAnswer])
 
     if (selectedAnswer === correctAnswer) {
-      setScore((prevScore) => prevScore + 1);
+      setScore((prevScore) => prevScore + 1)
     }
 
     if (currentQuestionIndex + 1 < questions.length) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setCurrentQuestionIndex(currentQuestionIndex + 1)
     } else {
-      finishQuiz();
+      finishQuiz()
     }
-  };
+  }
 
   const finishQuiz = () => {
     const newEntry = {
@@ -83,20 +83,20 @@ function App() {
       score,
       total: questions.length,
       date: new Date().toLocaleString(),
-    };
+    }
 
     const updatedHistory = [...history, newEntry];
-    setHistory(updatedHistory);
-    localStorage.setItem('quizHistory', JSON.stringify(updatedHistory));
+    setHistory(updatedHistory)
+    localStorage.setItem('quizHistory', JSON.stringify(updatedHistory))
 
-    setQuizStarted(false);
-  };
+    setQuizStarted(false)
+  }
 
   const retakeQuiz = () => {
-    setQuizStarted(false);
-    setQuestions([]);
-    setError(null); // Reset error state when restarting
-  };
+    setQuizStarted(false)
+    setQuestions([])
+    setError(null) // Reset error state when restarting
+  }
 
   const clearHistory = () => {
     localStorage.removeItem('quizHistory')
@@ -110,7 +110,7 @@ function App() {
       setTheme(savedTheme)
       document.documentElement.classList.add(savedTheme)
     }
-  }, []);
+  }, [])
 
   // Toggle theme between light and dark
   const toggleTheme = () => {
