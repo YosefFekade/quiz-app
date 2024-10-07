@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const QuizHistory = ({ history, clearHistory }) => {
   return (
@@ -34,7 +34,7 @@ const QuizHistory = ({ history, clearHistory }) => {
         </button>
       )}
     </div>
-  );
+  )
 }
 
 export default QuizHistory;

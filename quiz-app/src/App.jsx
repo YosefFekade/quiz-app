@@ -22,7 +22,7 @@ function App() {
 
   useEffect(() => {
     const storedHistory = JSON.parse(localStorage.getItem('quizHistory')) || [];
-    setHistory(storedHistory);
+    setHistory(storedHistory)
   }, []);
 
   // Fetching catagories from API
@@ -35,7 +35,7 @@ function App() {
       } catch (error) {
         setError('Failed to load quiz categories. Please try again.');
       }
-    };
+    }
     fetchCategories();
   }, []) 
 
@@ -54,7 +54,7 @@ function App() {
       setUserAnswers([]);
       setSelectedCategoryName(categoryName);
       setQuizStarted(true);
-      setError(null); // Clear any previous errors
+      setError(null) // Clear any previous errors
     } catch (error) {
       setError(error.message || 'Failed to fetch quiz questions. Please try again.');
     }
@@ -99,27 +99,27 @@ function App() {
   };
 
   const clearHistory = () => {
-    localStorage.removeItem('quizHistory');
-    setHistory([]);
-  };
+    localStorage.removeItem('quizHistory')
+    setHistory([])
+  }
   
   // Load saved theme from localStorage
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem('theme')
     if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.add(savedTheme);
+      setTheme(savedTheme)
+      document.documentElement.classList.add(savedTheme)
     }
   }, []);
 
   // Toggle theme between light and dark
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    document.documentElement.classList.remove(theme);
-    document.documentElement.classList.add(newTheme);
-    localStorage.setItem('theme', newTheme); // Save preference in localStorage
-  };
+    const newTheme = theme === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
+    document.documentElement.classList.remove(theme)
+    document.documentElement.classList.add(newTheme)
+    localStorage.setItem('theme', newTheme) // Save preference in localStorage
+  }
 
   return (
     <div className={`${theme === 'dark' ? 'dark' : ''} bg-gradient-to-r from-blue-300 to-teal-600 `}>
@@ -146,7 +146,7 @@ function App() {
                 <span>&times;</span>
               </button>
             </div>
-          ) : null}
+          ) : null};
 
           {!quizStarted && questions.length === 0 && !error ? (
             <>

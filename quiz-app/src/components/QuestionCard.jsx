@@ -65,7 +65,7 @@ const QuestionCard = ({ question, onAnswerSelect, currentQuestionIndex, totalQue
         </div>
       )}
     </div>
-  );
+  )
 }
 
 export default QuestionCard;

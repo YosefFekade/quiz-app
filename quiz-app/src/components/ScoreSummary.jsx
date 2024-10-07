@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const ScoreSummary = ({ score, total, questions, userAnswers, onRetakeQuiz }) => {
   return (
@@ -35,7 +35,7 @@ const ScoreSummary = ({ score, total, questions, userAnswers, onRetakeQuiz }) =>
         Take another quiz
       </button>
     </div>
-  );
+  )
 }
 
 export default ScoreSummary;

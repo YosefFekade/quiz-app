@@ -21,9 +21,9 @@ const QuizStart = ({ categories, onStartQuiz }) => {
 
   {/* Function to handel selection of a catagory when triggered from the dropdown*/}
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-    setSearchQuery(category.name);
-    setDropdownOpen(false); // Close the dropdown on selection
+    setSelectedCategory(category)
+    setSearchQuery(category.name)
+    setDropdownOpen(false) // Close the dropdown on selection
   }
 
   return (
@@ -99,7 +99,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
         Start Quiz
       </button>
     </div>
-  );
+  )
 }
 
 export default QuizStart;
