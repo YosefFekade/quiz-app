@@ -16,7 +16,7 @@ const QuizHistory = ({ history, clearHistory }) => {
                 <span className="text-gray-700 dark:text-gray-200">Score:</span> {entry.score} / {entry.total}
               </div>
               <div>
-                <span className="text-gray-700 dark:text-gray-200">Date:</span> {entry.date}
+                <span className="text-gray-700 dark:text-gray-200">Difficulty:</span> {entry.difficulty}
               </div>
             </li>
           ))}

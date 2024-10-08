@@ -71,9 +71,9 @@ const QuizStart = ({ categories, onStartQuiz }) => {
           onChange={(e) => setDifficulty(e.target.value)}
           className="border px-4 py-2 rounded-md w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
         >
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
         </select>
       </div>
 

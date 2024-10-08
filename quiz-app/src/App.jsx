@@ -17,6 +17,7 @@ function App() {
   const [categories, setCategories] = useState([])
   const [history, setHistory] = useState([])
   const [selectedCategoryName, setSelectedCategoryName] = useState('')
+  const [selectedDifficulty,selectedsetDifficulty]= useState('')
   const [error, setError] = useState(null) // Track error state
   const [theme, setTheme] = useState('light') // Light by default
 
@@ -53,6 +54,7 @@ function App() {
       setScore(0)
       setUserAnswers([])
       setSelectedCategoryName(categoryName)
+      selectedsetDifficulty(difficulty)
       setQuizStarted(true)
       setError(null) // Clear any previous errors
     } catch (error) {
@@ -80,9 +82,9 @@ function App() {
   const finishQuiz = () => {
     const newEntry = {
       topic: selectedCategoryName,
+      difficulty:selectedDifficulty, 
       score,
       total: questions.length,
-      date: new Date().toLocaleString(),
     }
 
     const updatedHistory = [...history, newEntry];
