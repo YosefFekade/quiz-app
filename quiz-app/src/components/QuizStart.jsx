@@ -12,18 +12,19 @@ const QuizStart = ({ categories, onStartQuiz }) => {
     category.name.toLowerCase().includes(searchQuery.toLowerCase())// The filter method checks if each category’s name includes a text in the searchQuery typed by the user
   )
 
-  {/* Function to make sure user has selected a catagory to move on to the questions */}
-  const handleStartQuiz = () => {
-    if (selectedCategory) {
-      onStartQuiz(selectedCategory.id, selectedCategory.name, difficulty, numQuestions) // This will send input values of the user to the app.jsx as parameters
-    }
-  }
-
   {/* Function to handel selection of a catagory when triggered from the dropdown*/}
   const handleCategorySelect = (category) => {
     setSelectedCategory(category)
     setSearchQuery(category.name)
     setDropdownOpen(false) // Close the dropdown on selection
+  }
+
+  
+   {/* Function to make sure user has selected a catagory to move on to the questions */}
+  const handleStartQuiz = () => {
+    if (selectedCategory) {
+      onStartQuiz(selectedCategory.id, selectedCategory.name, difficulty, numQuestions) // This will send input values of the user to the app.jsx as parameters
+    }
   }
 
   return (
