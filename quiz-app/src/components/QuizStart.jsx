@@ -22,7 +22,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
   
    {/* Function to make sure user has selected a catagory to move on to the questions */}
   const handleStartQuiz = () => {
-    if (selectedCategory&&numQuestions.length>0) {
+    if (selectedCategory && numQuestions.length!= null && numQuestions!=0) {
       onStartQuiz(selectedCategory.id, selectedCategory.name, difficulty, numQuestions) // This will send input values of the user to the app.jsx as parameters
     }
   }

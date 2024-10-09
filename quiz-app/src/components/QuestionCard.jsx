@@ -12,7 +12,7 @@ const QuestionCard = ({ question, onAnswerSelect, currentQuestionIndex, totalQue
     //Reseting logic
     setSelectedAnswer(null) // Reset the selected answer on question change
     setIsAnswered(false) // Reset the answered state on question change
-  }, [question])  // depends on the  question props change, to shuffle the answers and reset any previous selections.
+  }, [question])  // depends on the  question prop change, to shuffle the answers and reset any previous selections.
 
   const handleAnswerClick = (answer) => {
     setSelectedAnswer(answer)

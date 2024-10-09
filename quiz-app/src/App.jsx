@@ -72,7 +72,7 @@ function App() {
       setScore((prevScore) => prevScore + 1)
     }
 
-    if (currentQuestionIndex + 1 < questions.length) {
+    if (currentQuestionIndex + 1 < questions.length) { //checks the current index of the question with that the total of the total number of questions 
       setCurrentQuestionIndex(currentQuestionIndex + 1)
     } else {
       finishQuiz()
@@ -87,7 +87,7 @@ function App() {
       total: questions.length,
     }
 
-    const updatedHistory = [...history, newEntry];
+    const updatedHistory = [...history, newEntry] // This will create an array with of old history and the new entry to one array to be set.
     setHistory(updatedHistory)
     localStorage.setItem('quizHistory', JSON.stringify(updatedHistory))
 
