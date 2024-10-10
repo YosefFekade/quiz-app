@@ -154,7 +154,7 @@ function App() {
             <>
               <Logo />
              <div className="flex justify-center">
-              <div className="w-full  lg:max-w-4xl xl:max-w-6xl p-4">
+              <div className="w-full  lg:max-w-3xl xl:max-w-4xl p-4">
                 <QuizStart categories={categories} onStartQuiz={startQuiz} />
               </div>
             </div>
@@ -167,7 +167,7 @@ function App() {
             </>
           ) : !quizStarted && questions.length > 0 && !error ? (
             <div className="flex justify-center">
-              <div className="w-full  lg:max-w-4xl xl:max-w-6xl p-4">
+              <div className="w-full  lg:max-w-3xl xl:max-w-4xl p-4">
             <ScoreSummary
               score={score}
               total={questions.length}
@@ -179,7 +179,7 @@ function App() {
             </div>
           ) : (
             <div className="flex justify-center">
-              <div className="w-full  lg:max-w-4xl xl:max-w-6xl p-4">
+              <div className="w-full  lg:max-w-3xl xl:max-w-4xl p-4">
             <QuestionCard
               question={questions[currentQuestionIndex]}
               onAnswerSelect={handleAnswerSelect}

@@ -22,13 +22,13 @@ const QuizStart = ({ categories, onStartQuiz }) => {
   
    {/* Function to make sure user has selected a catagory to move on to the questions */}
   const handleStartQuiz = () => {
-    if (selectedCategory && numQuestions.length!= null && numQuestions!=0) {
+    if (selectedCategory && numQuestions != '' ) {
       onStartQuiz(selectedCategory.id, selectedCategory.name, difficulty, numQuestions) // This will send input values of the user to the app.jsx as parameters
     }
   }
 
   return (
-    <div className="p-4 text-center bg-white mb-4 dark:bg-gray-800 shadow-md rounded-md">
+    <div className="p-4 text-center bg-white mb-4 dark:bg-gray-800 shadow-md rounded-md opacity-90">
       <h2 className="text-2xl text-center font-bold mb-4 text-gray-900 dark:text-gray-100">Start A Quiz</h2>
 
       {/* Filterable Dropdown for Categories */}
@@ -36,11 +36,11 @@ const QuizStart = ({ categories, onStartQuiz }) => {
         <label className="block text-left text-lg mb-2 text-gray-900 dark:text-gray-100">Select a Category</label>
         <input
           type="text"
-          placeholder="Search for a category to start a Quiz..."
+          placeholder="Search for a category to start a quiz..."
           value={searchQuery}
           onChange={(e) => {
-            setSearchQuery(e.target.value);
-            setDropdownOpen(true); // Show dropdown when user types
+            setSearchQuery(e.target.value)
+            setDropdownOpen(true) // Show dropdown when user types
           }}
           className="border px-4 py-2 rounded-md w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
         />

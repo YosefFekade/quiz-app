@@ -2,7 +2,7 @@ import React from 'react'
 
 const ScoreSummary = ({ score, total, questions, userAnswers, onRetakeQuiz }) => {
   return (
-    <div className="score-summary bg-white dark:bg-gray-800 p-4 border rounded shadow-md text-center">
+    <div className="score-summary bg-white dark:bg-gray-800 p-4 border rounded shadow-md text-center  opacity-90">
       <h2 className="bg-gradient-to-r from-blue-400 to-teal-600  text-transparent bg-clip-text text-xl md:text-3xl font-weight: 900 font-serif font-extrabold">Quiz Complete!</h2>
       
       <p className="text-xl mb-4">Your Score: {score} / {total}</p>
