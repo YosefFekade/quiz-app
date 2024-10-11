@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 const QuizStart = ({ categories, onStartQuiz }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [difficulty, setDifficulty] = useState('easy');
-  const [numQuestions, setNumQuestions] = useState(5);
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [difficulty, setDifficulty] = useState('easy')
+  const [numQuestions, setNumQuestions] = useState(5)
   
   // Filters the categories based on the search query from the user 
   const filteredCategories = categories.filter((category) =>
