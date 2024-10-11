@@ -25,7 +25,7 @@ const QuizHistory = ({ history, clearHistory }) => {
         null
       )}
 
-      {history.length > 0 && ( //only appears if there is at least one quiz history entry 
+      {history.length > 0 && (
         <button
           className="p-2 bg-red-500 text-white rounded w-full mt-4"
           onClick={clearHistory}
