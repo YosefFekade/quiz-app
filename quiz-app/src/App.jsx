@@ -8,6 +8,7 @@ import Logo from './components/logo'
 import Footer from './components/footer'
 import Header from './components/header'
 
+// glasmorphism for all the divs
 function App() {
   const [quizStarted, setQuizStarted] = useState(false)
   const [questions, setQuestions] = useState([])

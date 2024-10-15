@@ -19,7 +19,7 @@ const QuizStart = ({ categories, onStartQuiz }) => {
     setDropdownOpen(false) // Close the dropdown on selection
   }
 
-  //  user authentication 
+  //  user authentication just the page only
    {/* Function to make sure user has selected a catagory to move on to the questions */}
   const handleStartQuiz = () => {
     if (selectedCategory && numQuestions != '' ) {
