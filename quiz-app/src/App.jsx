@@ -7,6 +7,7 @@ import QuizHistory from './components/QuizHistory'
 import Logo from './components/logo'
 import Footer from './components/footer'
 import Header from './components/header'
+import DarkModeToggle from './components/toggle';
 
 // glasmorphism for all the divs
 function App() {
@@ -129,14 +130,9 @@ function App() {
       <Header />
       <div className=" p-4 dark:bg-gradient-to-r from-gray-900 to-gray-700 text-gray-900 dark:text-gray-100 min-h-screen">
           {/* Dark mode toggle button */}
+          
           <div className="p-4 flex justify-end">
-            {/* change button to a toggle  */}
-            <button
-              onClick={toggleTheme}
-              className="bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-700 dark:bg-gray-200 dark:text-gray-800 dark:hover:bg-gray-300 transition-colors"
-            >
-              {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
-            </button>
+                  <DarkModeToggle toggleTheme={toggleTheme} />
           </div>
 
           {error ? (
