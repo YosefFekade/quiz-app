@@ -1,3 +1,19 @@
 .toggle{
    visibility: hidden; 
 }
+
+.toggle + label{
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.toggle + label::before{
+    content: " ";
+    height: 1em;
+    width: 2em;
+    border-radius: 1em;
+    background-color: bisque;
+    margin-right: 0.5em;
+}
