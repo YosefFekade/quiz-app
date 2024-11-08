@@ -7,29 +7,18 @@
 
 
 // DarkModeToggle.jsx
-import { useState, useEffect } from 'react';
+import React from 'react';
 
-export default function DarkModeToggle() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+export default function DarkModeToggle( {toggleTheme }) {
 
-  useEffect(() => {
-    const root = window.document.documentElement;
-    if (isDarkMode) {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-  }, [isDarkMode]);
-
-  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
   return (
     <button
-      onClick={toggleDarkMode}
+      onClick={toggleTheme }
       className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors"
       aria-label="Toggle dark mode"
     >
-      {isDarkMode ? (
+      {true ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"
