@@ -17,3 +17,13 @@
     background-color: bisque;
     margin-right: 0.5em;
 }
+
+.toggle + label::after{
+    content: "";
+    height: 0.8em;
+    width: 0.8em;
+    border-radius: 1em;
+    background-color: black;
+    position: absolute;
+    
+}
