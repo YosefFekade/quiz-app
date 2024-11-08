@@ -16,6 +16,7 @@
     border-radius: 1em;
     background-color: bisque;
     margin-right: 0.5em;
+    transition: background-color 250ms ease-in-out;
 }
 
 .toggle + label::after{
@@ -25,5 +26,9 @@
     border-radius: 1em;
     background-color: black;
     position: absolute;
-    
+    transition: background-color 250ms ease-in-out;    
+}
+
+.toggle:checked + label::after{
+    transform: translateX(150%);
 }
