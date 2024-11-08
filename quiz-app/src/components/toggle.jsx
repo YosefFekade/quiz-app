@@ -7,20 +7,25 @@
 
 
 // DarkModeToggle.jsx
-import React ,{ useState, useEffect }from "react";
+import { useState, useEffect } from 'react';
 
-export default function DarkModeToggle(toggleTheme) {
+export default function DarkModeToggle() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-    const [isDarkMode, setIsDarkMode] = useState(true);
-    const changeTheme =()=>{
-        toggleTheme();
-        setIsDarkMode(!isDarkMode)
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (isDarkMode) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
     }
-  
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
   return (
     <button
-      onClick={changeTheme}
+      onClick={toggleDarkMode}
       className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors"
       aria-label="Toggle dark mode"
     >
@@ -33,10 +38,9 @@ export default function DarkModeToggle(toggleTheme) {
           stroke="currentColor"
         >
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M12 3v1m0 16v1m8-8h1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707M16.95 7.05l.707-.707M7.05 16.95l.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"
+            fillRule="evenodd"
+            d="M17.293 17.293a8 8 0 01-11.313-11.313 8 8 0 0011.313 11.313z"
+            clipRule="evenodd"
           />
         </svg>
       ) : (
@@ -47,11 +51,13 @@ export default function DarkModeToggle(toggleTheme) {
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path
-            fillRule="evenodd"
-            d="M17.293 17.293a8 8 0 01-11.313-11.313 8 8 0 0011.313 11.313z"
-            clipRule="evenodd"
+           <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M12 3v1m0 16v1m8-8h1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707M16.95 7.05l.707-.707M7.05 16.95l.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"
           />
+          
         </svg>
       )}
     </button>
