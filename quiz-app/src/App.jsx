@@ -126,7 +126,7 @@ function App() {
   }
 
   return (
-    <div className={`${theme === 'dark' ? 'dark' : ''} bg-gradient-to-r from-blue-300 to-teal-600 `}>
+    <div className={` ${theme === 'dark' ? 'dark' : ''} transition ease-in-out delay-250 bg-gradient-to-r from-blue-300 to-teal-600 `}>
       <Header />
       <div className=" p-4 dark:bg-gradient-to-r from-gray-900 to-gray-700 text-gray-900 dark:text-gray-100 min-h-screen">
           {/* Dark mode toggle button */}
